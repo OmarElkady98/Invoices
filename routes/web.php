@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\auth\LogoutController;
+use App\Http\Controllers\InvoicesController;
+use App\Models\invoices;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +29,14 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/index', [AdminController::class , 'index'])->name('index');
+
+
+
+    ///////////////////////////////////Start Invoices Route/////////////////////////////////////
+
+    Route::group(['prefix' => 'invoices'] , function() {
+        Route::get('/' , [InvoicesController::class , 'index'])->name('invoices.index') ;
+    }) ;
+
+    ///////////////////////////////////End Invoices Route/////////////////////////////////////
 }) ;
