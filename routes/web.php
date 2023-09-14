@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\SectionController;
 use App\Models\invoices;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,14 @@ Route::group(['middleware' => 'auth'] , function() {
     }) ;
 
     ///////////////////////////////////End Invoices Route/////////////////////////////////////
+
+
+    ///////////////////////////////////Start Section Route/////////////////////////////////////
+
+    Route::group(['prefix' => 'section'] , function()   {
+        Route::get('/' , [SectionController::class , 'index'])->name('section.index') ;
+        Route::post('/store' , [SectionController::class , 'store'])->name('section.store') ;
+    }) ;
+
+    ///////////////////////////////////End Section Route/////////////////////////////////////
 }) ;

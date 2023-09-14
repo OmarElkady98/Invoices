@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-قائمه الفواتير
+الأقسام
 @stop
 @section('css')
 <!-- Internal Data table css -->
@@ -16,7 +16,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمه الفواتير</span>
+							<h4 class="content-title mb-0 my-auto">الإعدادات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  الأقسام</span>
 						</div>
 					</div>
 
@@ -28,47 +28,35 @@
 				<div class="row row-sm">
 					<div class="col-xl-12">
 						<div class="card">
+                            @if (Session::has('sucssfily'))
+                                {{Session::get('sucssfily')}}
+                            @endif
+
 							<div class="card-header pb-0">
 								<div class="d-flex justify-content-between">
-									<h4 class="card-title mg-b-0">SIMPLE TABLE</h4>
-									<i class="mdi mdi-dots-horizontal text-gray"></i>
+									<div class="col-sm-6 col-md-4 col-xl-3">
+										<a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1">اضافه قسم</a>
+									</div>
 								</div>
-								<p class="tx-12 tx-gray-500 mb-2">Example of Valex Simple Table. <a href="">Learn more</a></p>
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table text-md-nowrap" id="example1">
 										<thead>
 											<tr>
-												<th class="wd-15p border-bottom-0">رقم الفاتوره</th>
-												<th class="wd-15p border-bottom-0">تاريخ الفاتوره</th>
-												<th class="wd-20p border-bottom-0">تاريخ الإستحقاق</th>
-												<th class="wd-15p border-bottom-0">المنتج</th>
-												<th class="wd-10p border-bottom-0">القسم</th>
-												<th class="wd-25p border-bottom-0">الخصم</th>
-                                                <th class="wd-15p border-bottom-0">نسبه الضريبه</th>
-												<th class="wd-15p border-bottom-0">قيمه الضريبه</th>
-												<th class="wd-20p border-bottom-0">الإجمالى</th>
-												<th class="wd-15p border-bottom-0">الحاله</th>
-												<th class="wd-10p border-bottom-0">قيمه الحاله</th>
-												<th class="wd-25p border-bottom-0">ملاحظات</th>
+                                                <th class="wd-15p border-bottom-0">#</th>
+												<th class="wd-15p border-bottom-0">القسم</th>
+												<th class="wd-15p border-bottom-0">الوصف</th>
+												<th class="wd-20p border-bottom-0"> العمليات</th>
 											</tr>
 										</thead>
 										<tbody>
-                                            @foreach ($AllInvoices as $key => $invoice)
+                                            @foreach ($sections as $key => $section)
                                                 <tr>
-                                                    <td>{{ $invoice->invoice_number }}</td>
-                                                    <td>{{ $invoice->invoice_date}}</td>
-                                                    <td>{{ $invoice->due_date }}</td>
-                                                    <td>{{ $invoice->product }}</td>
-                                                    <td>{{ $invoice->section }}</td>
-                                                    <td>{{ $invoice->discount }}</td>
-                                                    <td>{{ $invoice->rate_vat }}</td>
-                                                    <td>{{ $invoice->value_vat }}</td>
-                                                    <td>{{ $invoice->total }}</td>
-                                                    <td>{{ $invoice->status }}</td>
-                                                    <td>{{ $invoice->value_status }}</td>
-                                                    <td>{{ $invoice->note }}</td>
+                                                    <td>{{ $key }}</td>
+                                                    <td>{{ $section->section_name }}</td>
+                                                    <td>{{ $section->description}}</td>
+                                                    <td>{{ $section->created_by }}</td>
                                                 </tr>
                                             @endforeach
 										</tbody>
@@ -78,6 +66,40 @@
 						</div>
 					</div>
 					<!--/div-->
+
+                    <!-- Basic modal -->
+                    <div class="modal" id="modaldemo1">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content modal-content-demo">
+                                <div class="modal-header">
+                                    <h6 class="modal-title">إضافه قسم</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('section.store') }}" method="POST">
+                                        {{ csrf_field() }}
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">اسم القسم</label>
+                                            <input type="text" class="form-control" id="section_name" name="section_name">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">الوصف</label>
+                                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success">تاكيد</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Basic modal -->
+
 
 				</div>
 				<!-- /row -->

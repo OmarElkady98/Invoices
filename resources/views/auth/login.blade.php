@@ -1,6 +1,6 @@
 @extends('layouts.master2')
 @section('title')
-تسجيل دخول - برنامج الفواتير
+تسجيل الدخول
 @stop
 
 @section('css')
