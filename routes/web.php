@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::group(['prefix' => 'section'] , function()   {
         Route::get('/' , [SectionController::class , 'index'])->name('section.index') ;
         Route::post('/store' , [SectionController::class , 'store'])->name('section.store') ;
+        Route::post('/update' , [SectionController::class , 'update'])->name('section.update') ;
+        Route::post('/delete' , [SectionController::class , 'destroy'])->name('section.delete') ;
     }) ;
 
     ///////////////////////////////////End Section Route/////////////////////////////////////

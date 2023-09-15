@@ -65,16 +65,51 @@ class SectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, section $section)
+    public function update(sectionRequest $request, section $section)
     {
-        //
+        try {
+            if( isset($request) && filter_var($request->id , FILTER_VALIDATE_INT) ) {
+                $section = section::find($request->id) ;
+
+                if($section)    {
+                    $section->section_name = $request->section_name ;
+                    $section->description  = $request->description ;
+
+                    $section->save() ;
+
+                    session()->flash('update_sucssfily' , 'تمت تحديث القسم بنجاح') ;
+                }
+
+                return redirect()->back() ;
+            }   else    {
+                return redirect()->route('section.index') ;
+            }
+        } catch (\Exception $ex) {
+            return redirect()->route('section.index') ;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(section $section)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            if( isset($request->id) && filter_var($request->id , FILTER_VALIDATE_INT) ) {
+
+                $section = section::find($request->id) ;
+
+                if($section)    {
+                    $section->delete() ;
+                    session()->flash('delete_sucssfily' , 'تم حذف القسم بنجاح') ;
+                }
+                return redirect()->back() ;
+
+            }   else    {
+                return redirect()->route('section.index') ;
+            }
+        } catch (\Exception $ex) {
+            return redirect()->route('section.index') ;
+        }
     }
 }
