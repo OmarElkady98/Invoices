@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectionController;
 use App\Models\invoices;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,14 @@ Route::group(['middleware' => 'auth'] , function() {
     }) ;
 
     ///////////////////////////////////End Section Route/////////////////////////////////////
+
+
+    ///////////////////////////////////Start Product Route/////////////////////////////////////
+
+    Route::group(['prefix' => 'product'] , function()   {
+        Route::get('/' , [ProductController::class , 'index'])->name('product.index') ;
+        Route::post('/store' , [ProductController::class , 'store'])->name('product.store') ;
+    }) ;
+
+    ///////////////////////////////////End Product Route/////////////////////////////////////
 }) ;
