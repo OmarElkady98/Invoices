@@ -32,6 +32,10 @@
                                 {{Session::get('sucssfily')}}
                             @endif
 
+                            @if (Session::has('update'))
+                                {{Session::get('update')}}
+                            @endif
+
 							@if ($errors->any())
 								<div class="alert alert-danger">
 									<ul>
@@ -74,12 +78,12 @@
                                                     <td>
 
 														<a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-														data-id="{{ $product->id }}" data-product_name="{{ $product->product_name }}"
-														data-description="{{ $product->description }}" data-toggle="modal" href="#exampleModal2"
+														data-id="{{ $product->id }}" data-name="{{ $product->name }}"
+														data-description="{{ $product->description }}" data-section_name="{{ $product->section->section_name  }}" data-toggle="modal" href="#exampleModal2"
 														title="تعديل"><i class="las la-pen"></i></a>
 
 														<a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-														data-id="{{ $product->id }}" data-product_name="{{ $product->product_name }}" data-toggle="modal"
+														data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-toggle="modal"
 														href="#modaldemo9" title="حذف"><i class="las la-trash"></i></a>
 
 													</td>
@@ -151,12 +155,13 @@
                             </div>
                             <div class="modal-body">
 
-                                <form action="{{ route('section.update') }}" method="POST" autocomplete="off">
+                                <form action="{{ route('product.update') }}" method="POST" autocomplete="off">
                                     {{method_field('patch')}}
                                     {{csrf_field()}}
                                     @method('POST')
                                     <div class="form-group">
                                         <input type="hidden" name="id" id="id" value="">
+                                        <input type="hidden" name="update" value="update">
                                         <label for="recipient-name" class="col-form-label">اسم القسم:</label>
                                         <input class="form-control" name="name" id="name" type="text">
                                     </div>
@@ -164,6 +169,20 @@
                                         <label for="message-text" class="col-form-label">ملاحظات:</label>
                                         <textarea class="form-control" id="description" name="description"></textarea>
                                     </div>
+
+                                    @if (isset($sections) && !empty($sections))
+                                                <label>القسم</label>
+                                                <select name="section_id" id="section_name">
+                                                    @foreach ($sections as $section)
+                                                        <option value="{{ $section->section_name }}">{{ $section->section_name }}</option>
+                                                    @endforeach
+
+                                                </select>
+
+                                                {{-- @foreach ($sections as $section)
+                                                        <option value={{ $section->id }}>{{ $section->section_name }}</option>
+                                                    @endforeach --}}
+                                        @endif
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">تاكيد</button>
@@ -235,10 +254,12 @@
         var id = button.data('id')
         var name = button.data('name')
         var description = button.data('description')
+        var section_name = button.data('section_name')
         var modal = $(this)
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #name').val(name);
         modal.find('.modal-body #description').val(description);
+        modal.find('.modal-body #section_name').val(section_name);
     })
 </script>
 

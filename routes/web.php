@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::group(['prefix' => 'product'] , function()   {
         Route::get('/' , [ProductController::class , 'index'])->name('product.index') ;
         Route::post('/store' , [ProductController::class , 'store'])->name('product.store') ;
+        Route::post('/update' , [ProductController::class , 'update'])->name('product.update') ;
     }) ;
 
     ///////////////////////////////////End Product Route/////////////////////////////////////

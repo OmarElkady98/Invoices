@@ -80,9 +80,30 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, product $product)
+    public function update(ProductRequest $request)
     {
-        //
+        try {
+            $section = section::where('section_name' , $request->section_id)->first() ;
+            $product = product::where('id' , $request->id)->first() ;
+
+            if($section && $product)    {
+
+                $product->name          = $request->name ;
+                $product->description   = $request->description ;
+                $product->section_id    =  $section->id ;
+
+                $product->save() ;
+
+                session()->flash('update' , 'تم تحديث المنتج بنجاح') ;
+
+                return redirect()->back() ;
+
+            }   else    {
+                return redirect()->route('invoices.index') ;
+            }
+        } catch (\Exception $ex) {
+            return redirect()->route('invoices.index') ;
+        }
     }
 
     /**

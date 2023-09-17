@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name'          =>  'required_without:update|string' ,
-            'section_id'    =>  'required|numeric|min:1'
+            'section_id'    =>  'required'
         ];
     }
 
@@ -34,8 +34,6 @@ class ProductRequest extends FormRequest
             'name.string'           =>  'يجب ان يكون اسم المنتج عباره عن نص' ,
 
             'section_id.required'   =>  'من فضلك قم بتحديد القسم' ,
-            'section_id.numeric'    =>  'يجب أن يكون قيمه المنتج عباره عن رقم' ,
-            'section_id.min'        =>  'يجب ان يكون الرقم اكبر من 1'
         ] ;
     }
 }
