@@ -109,8 +109,22 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $product = product::where('id' , $request->id)->first() ;
+
+            if ($product)   {
+
+                $product->delete() ;
+
+                session()->flash('delete' , 'تم حذف المنتج بنجاح') ;
+
+            }
+            return redirect()->back() ;
+
+        } catch (\Exception $ex) {
+            return redirect()->route('invoices.index') ;
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\sectionRequest;
+use App\Models\product;
 use App\Models\section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,6 +101,15 @@ class SectionController extends Controller
                 $section = section::find($request->id) ;
 
                 if($section)    {
+
+                    $id = $section->id ;
+
+                    // Bring all the products in the section
+                    $product = product::select('id')->where('section_id' , $id)->get() ;
+
+                    // Delete all products in the section
+                    product::destroy($product->toArray()) ;
+
                     $section->delete() ;
                     session()->flash('delete_sucssfily' , 'تم حذف القسم بنجاح') ;
                 }

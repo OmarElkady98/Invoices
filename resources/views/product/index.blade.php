@@ -36,6 +36,10 @@
                                 {{Session::get('update')}}
                             @endif
 
+                            @if (Session::has('delete'))
+                                {{Session::get('delete')}}
+                            @endif
+
 							@if ($errors->any())
 								<div class="alert alert-danger">
 									<ul>
@@ -201,7 +205,7 @@
                                 <h6 class="modal-title">حذف القسم</h6><button aria-label="Close" class="close" data-dismiss="modal"
                                                                             type="button"><span aria-hidden="true">&times;</span></button>
                             </div>
-                            <form action="{{ route('section.delete') }}" method="POST">
+                            <form action="{{ route('product.delete') }}" method="POST">
                                 {{method_field('POST')}}
                                 {{csrf_field()}}
                                 @method('POST')
